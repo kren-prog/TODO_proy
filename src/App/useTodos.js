@@ -1,12 +1,11 @@
 import React from 'react';
 import { useLocalStorage } from './useLocalStorage';
 
-const TodoContext = React.createContext();
 
-function TodoProvider({children}) {
+function useTodos() {
 
-     /** Los : se usan para renombrar una variable */
-  const {item: todos, saveItem: saveTodos, loading, error} = useLocalStorage('TODOS_V1', []);
+  /** Los : se usan para renombrar una variable */
+  const { item: todos, saveItem: saveTodos, loading, error } = useLocalStorage('TODOS_V1', []);
 
   const [searchValue, setSearchValue] = React.useState('');
 
@@ -26,9 +25,9 @@ function TodoProvider({children}) {
     }
   );
 
-  const addTodo = (text)=>{
+  const addTodo = (text) => {
     const newTodos = [...todos];
-    newTodos.push({text, completed: false});
+    newTodos.push({ text, completed: false });
 
     saveTodos(newTodos);
   }
@@ -40,7 +39,7 @@ function TodoProvider({children}) {
     );
     newTodos[todoIndex].completed = true;
     saveTodos(newTodos);
-  }; 
+  };
 
   const deleteTodo = (text) => {
     const newTodos = [...todos];
@@ -49,32 +48,26 @@ function TodoProvider({children}) {
     );
     newTodos.splice(todoIndex, 1);
     saveTodos(newTodos);
-  }; 
-/** Acá esta todo lo que se quiere compartir  */
-    return (
-        <TodoContext.Provider value=
-        {{
-            loading,
-            error,
-            completedTodos,
-            totalTodos,
-            searchValue,
-            setSearchValue,
-            searchedTodos,
-            addTodo,
-            completeTodo,
-            deleteTodo,
-            openModal,
-            setOpenModal
-            }}>
-            {
-                children
-            }
-        </TodoContext.Provider>
-    );
+  };
+  /** Acá esta todo lo que se quiere compartir  */
+  return {
+
+    loading,
+    error,
+    completedTodos,
+    totalTodos,
+    searchValue,
+    setSearchValue,
+    searchedTodos,
+    addTodo,
+    completeTodo,
+    deleteTodo,
+    openModal,
+    setOpenModal
+  };
 }
 
 
 
-export { TodoContext, TodoProvider }
+export { useTodos };
 
