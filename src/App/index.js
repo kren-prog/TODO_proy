@@ -31,54 +31,91 @@ function App() {
     completedTodos,
     searchValue,
     setSearchValue,
-    addTodo, 
-} = useTodos();
+    addTodo,
+  } = useTodos();
 
 
-return (
-  <>
+  return (
+    <>
       <TodoHeader>
-          <TodoCounter
-              completedTodos={completedTodos} totalTodos={totalTodos}
-          />
-          <TodoSearch
-              searchValue={searchValue}
-              setSearchValue={setSearchValue}
-          />
+        <TodoCounter
+          completedTodos={completedTodos} totalTodos={totalTodos}
+        />
+        <TodoSearch
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+        />
       </TodoHeader>
-      <TodoList>
-          {loading &&
-              <>
-                  <TodosLoading />
-                  <TodosLoading />
-                  <TodosLoading />
-              </>
-          }
-          {error && <TodosError />}
-          {(!loading && searchedTodos.length === 0) && <EmptyTodos />}
 
-          {searchedTodos.map(todo => (
-              <TodoItem
-                  key={todo.text}
-                  text={todo.text}
-                  completed={todo.completed}
-                  onComplete={() => completeTodo(todo.text)}
-                  onDelete={() => deleteTodo(todo.text)}
-              />
-          ))}
+      <TodoList
+        error={error}
+        loading={loading}
+        searchedTodos={searchedTodos}
+        totalTodos={totalTodos}
+        searchText={searchValue}
+        onError={() => <TodosError />}
+        onLoading={() => <TodosLoading />}
+        onEmptyTodos={() => <EmptyTodos />}
+        onEmptySearchResults={(searchText) => (<p>No hay resultados para {searchText}</p>)}
+
+        // RENDER PROPS
+        // render={todo => (
+        //   <TodoItem
+        //     key={todo.text}
+        //     text={todo.text}
+        //     completed={todo.completed}
+        //     onComplete={() => completeTodo(todo.text)}
+        //     onDelete={() => deleteTodo(todo.text)}
+
+        //   />
+        // )}
+      >
+        {/* RENDER FUNCTION */}
+        {todo => (
+          <TodoItem
+            key={todo.text}
+            text={todo.text}
+            completed={todo.completed}
+            onComplete={() => completeTodo(todo.text)}
+            onDelete={() => deleteTodo(todo.text)}
+
+          />
+        )}
       </TodoList>
+
+      {/* <TodoList> */}
+        {/* {loading &&
+          <>
+            <TodosLoading />
+            <TodosLoading />
+            <TodosLoading />
+          </>
+        }
+        {error && <TodosError />}
+        {(!loading && searchedTodos.length === 0) && <EmptyTodos />}
+
+        {searchedTodos.map(todo => (
+          <TodoItem
+            key={todo.text}
+            text={todo.text}
+            completed={todo.completed}
+            onComplete={() => completeTodo(todo.text)}
+            onDelete={() => deleteTodo(todo.text)}
+          />
+        ))} */}
+      {/* </TodoList> */}
 
       <CreateTodoButton setOpenModal={setOpenModal} />
 
       {
-          openModal && (
-              <Modal>
-                  <TodoForm addTodo={addTodo} setOpenModal={setOpenModal} />
-              </Modal>
-          )}
+        openModal && (
+          <Modal>
+            <TodoForm addTodo={addTodo} setOpenModal={setOpenModal} />
+          </Modal>
+        )}
 
-  </>
-);
+    </>
+  );
 
 }
 
