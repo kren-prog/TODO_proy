@@ -10,26 +10,14 @@ function App() {
   //   console.log('loooog 2');
   // },[totalTodos]);
 
-
-
 //MODIFICAR todo counter para q muestre un msg de felicitación cuando se completen todas las tareas
   return (
     <TodoProvider>
       <AppUI/>
     </TodoProvider>
-    
-    // loading={loading}
-    // error={error}
-    // completedTodos = {completedTodos}
-    // totalTodos = {totalTodos}
-    // searchValue = {searchValue}
-    // setSearchValue = {setSearchValue} 
-    // searchedTodos = {searchedTodos}
-    // completeTodo = {completeTodo}
-    // deleteTodo = {deleteTodo}
-  
   );
 }
+
 
 
 export default App;
